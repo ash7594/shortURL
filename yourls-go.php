@@ -27,8 +27,10 @@ if( !empty( $url ) ) {
 	$log_redirect = yourls_log_redirect( $keyword );
 	
 	//yourls_redirect( $url, 301 );
-	header( 'Location: http://localhost/shortURL/output.php?url='.$url );
-	die();
+	include('output.php');
+	exit();
+	//header( 'Location: http://localhost/shortURL/output.php?url='.$url );
+	//die();
 
 // URL not found. Either reserved, or page, or doesn't exist
 } else {

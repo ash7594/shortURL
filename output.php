@@ -29,12 +29,12 @@ iframe {
 </style>
 
 <body>
-<iframe src="<?php if(isset($_GET['url'])) echo $_GET['url']; ?>" frameborder="0"></iframe>
+<iframe src="<?php echo $url ?>" frameborder="0"></iframe>
 <div id="me"><a href="http://wordpress.com"><strong>MY SITE URL</strong></a></div>
 
 <script>
-var hash2 = '<?php echo $_GET['url'] ?>';
-window.location.hash = hash2;
+var url = '<?php echo $url ?>';
+window.location.hash = url;
 </script>
 
 </body>
