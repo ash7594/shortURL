@@ -1,0 +1,9 @@
+# BEGIN ht
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /shortURL/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ /shortURL/yourls-loader.php [L]
+</IfModule>
+# END

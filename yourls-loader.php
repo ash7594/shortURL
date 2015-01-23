@@ -26,7 +26,6 @@ $pattern = yourls_make_regexp_pattern( yourls_get_shorturl_charset() );
 // Now load required template and exit
 
 yourls_do_action( 'pre_load_template', $request );
-
 // At this point, $request is not sanitized. Sanitize in loaded template.
 
 // Redirection:

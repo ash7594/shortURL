@@ -128,6 +128,7 @@ function yourls_html_head( $context = 'index', $title = '' ) {
 	<?php yourls_do_action( 'html_head', $context ); ?>
 </head>
 <body class="<?php echo $context; ?> <?php echo $bodyclass; ?>">
+<BR /></BR />
 <div id="wrap">
 	<?php
 }
@@ -169,11 +170,14 @@ function yourls_html_footer() {
 function yourls_html_addnew( $url = '', $keyword = '' ) {
 	$url = $url ? $url : 'http://';
 	?>
+	<BR />
 	<div id="new_url">
 		<div>
 			<form id="new_url_form" action="" method="get">
-				<div><strong><?php yourls_e( 'Enter the URL' ); ?></strong>:<input type="text" id="add-url" name="url" value="<?php echo $url; ?>" class="text" size="80" />
-				<?php yourls_e( 'Optional '); ?>: <strong><?php yourls_e('Custom short URL'); ?></strong>:<input type="text" id="add-keyword" name="keyword" value="<?php echo $keyword; ?>" class="text" size="8" />
+				<div><strong><?php yourls_e( 'Name' ); ?></strong>:&nbsp<input type="text" id="add-name" name="name" value="" class="text" size="80" /><BR /><BR />
+				<div><strong><?php yourls_e( 'Link to personal page' ); ?></strong>:&nbsp<input type="text" id="add-my-url" name="myurl" value="<?php echo $url; ?>" class="text" size="80" /><BR /><BR />
+				<div><strong><?php yourls_e( 'URL to share' ); ?></strong>:&nbsp<input type="text" id="add-url" name="url" value="<?php echo $url; ?>" class="text" size="80" /><BR /><BR />
+				<?php yourls_e( 'Optional '); ?>: <strong><?php yourls_e('Custom short URL'); ?></strong>:&nbsp<input type="text" id="add-keyword" name="keyword" value="<?php echo $keyword; ?>" class="text" size="8" /><BR /><BR />
 				<?php yourls_nonce_field( 'add_url', 'nonce-add' ); ?>
 				<input type="button" id="add-button" name="add-button" value="<?php yourls_e( 'Shorten The URL' ); ?>" class="button" onclick="add_link();" /></div>
 			</form>

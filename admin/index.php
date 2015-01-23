@@ -261,89 +261,9 @@ if ( isset( $_GET['u'] ) or isset( $_GET['up'] ) ) {
 // Begin output of the page
 $context = ( $is_bookmark ? 'bookmark' : 'index' );
 yourls_html_head( $context );
-yourls_html_logo();
-yourls_html_menu() ;
 
-yourls_do_action( 'admin_page_before_content' );
-
-if ( !$is_bookmark ) { ?>
-	<p><?php echo $search_sentence; ?></p>
-	<p><?php
-		printf( yourls__( 'Display <strong>%1$s</strong> to <strong class="increment">%2$s</strong> of <strong class="increment">%3$s</strong> URLs' ), $display_on_page, $max_on_page, $total_items );
-		if( $total_items_clicks !== false )
-			echo ", " . sprintf( yourls_n( 'counting <strong>1</strong> click', 'counting <strong>%s</strong> clicks', $total_items_clicks ), yourls_number_format_i18n( $total_items_clicks ) );
-	?>.</p>
-<?php } ?>
-<p><?php printf( yourls__( 'Overall, tracking <strong class="increment">%1$s</strong> links, <strong>%2$s</strong> clicks, and counting!' ), yourls_number_format_i18n( $total_urls ), yourls_number_format_i18n( $total_clicks ) ); ?></p>
-<?php yourls_do_action( 'admin_page_before_form' ); ?>
+yourls_do_action( 'admin_page_before_form' ); ?>
 
 <?php yourls_html_addnew(); ?>
 
-<?php
-// If bookmarklet, add message. Otherwise, hide hidden share box.
-if ( !$is_bookmark ) {
-	yourls_share_box( '', '', '', '', '', '', true );
-} else {
-	echo '<script type="text/javascript">$(document).ready(function(){
-		feedback( "' . $return['message'] . '", "'. $return['status'] .'");
-		init_clipboard();
-	});</script>';
-}
 
-yourls_do_action( 'admin_page_before_table' );
-
-yourls_table_head();
-
-if ( !$is_bookmark ) {
-	$params = array(
-		'search'       => $search,
-		'search_text'  => $search_text,
-		'search_in'    => $search_in,
-		'sort_by'      => $sort_by,
-		'sort_order'   => $sort_order,
-		'page'         => $page,
-		'perpage'      => $perpage,
-		'click_filter' => $click_filter,
-		'click_limit'  => $click_limit,
-		'total_pages'  => $total_pages,
-		'date_filter'  => $date_filter,
-		'date_first'   => $date_first,
-		'date_second'  => $date_second,
-	);
-	yourls_html_tfooter( $params );
-}
-
-yourls_table_tbody_start();
-
-// Main Query
-$where = yourls_apply_filter( 'admin_list_where', $where );
-$url_results = $ydb->get_results( "SELECT * FROM `$table_url` WHERE 1=1 $where ORDER BY `$sort_by` $sort_order LIMIT $offset, $perpage;" );
-$found_rows = false;
-if( $url_results ) {
-	$found_rows = true;
-	foreach( $url_results as $url_result ) {
-		$keyword = yourls_sanitize_string( $url_result->keyword );
-		$timestamp = strtotime( $url_result->timestamp );
-		$url = stripslashes( $url_result->url );
-		$ip = $url_result->ip;
-		$title = $url_result->title ? $url_result->title : '';
-		$clicks = $url_result->clicks;
-
-		echo yourls_table_add_row( $keyword, $url, $title, $ip, $clicks, $timestamp );
-	}
-}
-
-$display = $found_rows ? 'display:none' : '';
-echo '<tr id="nourl_found" style="'.$display.'"><td colspan="6">' . yourls__('No URL') . '</td></tr>';
-
-yourls_table_tbody_end();
-
-yourls_table_end();
-
-yourls_do_action( 'admin_page_after_table' );
-
-if ( $is_bookmark )
-	yourls_share_box( $url, $return['shorturl'], $title, $text );
-?>
-	
-<?php yourls_html_footer( ); ?>
